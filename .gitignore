@@ -29,3 +29,7 @@ data/manifests/batch_runs/*
 
 # Logs
 *.log
+
+# Personal notes / local agent state — not part of the submission
+docs/
+.claude/
