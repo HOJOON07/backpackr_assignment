@@ -14,6 +14,9 @@ public final class SparkSessionFactory {
                 .config("spark.sql.session.timeZone", "UTC")
                 .config("spark.sql.sources.partitionOverwriteMode", "dynamic")
                 .config("spark.sql.ansi.enabled", "true")
+                .config("spark.sql.adaptive.enabled", "true")
+                .config("spark.sql.adaptive.coalescePartitions.enabled", "true")
+                .config("spark.sql.adaptive.skewJoin.enabled", "true")
                 .config("spark.sql.warehouse.dir", config.warehousePath());
 
         String master = config.sparkMaster();
