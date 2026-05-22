@@ -1,0 +1,26 @@
+# Production profile example. The application code is identical to local; only
+# these settings change. This demonstrates that the job is not tied to the local
+# metastore or local filesystem.
+
+env=prod
+spark.master=yarn
+
+# External Hive metastore (or Glue catalog) instead of the local Derby store.
+metastore.mode=remote
+hive.metastore.uris=thrift://hive-metastore:9083
+warehouse.path=s3a://company-data-lake/warehouse
+
+# I/O on object storage
+input.path=s3a://company-data-lake/raw/ecommerce
+output.path=s3a://company-data-lake/ecommerce/activity_events
+manifest.path=s3a://company-data-lake/ecommerce/_manifests/activity_events
+
+# Catalog
+database=ecommerce
+table=activity_events
+
+# Sessionization
+session.gap.seconds=300
+
+# CSV
+csv.header=true
