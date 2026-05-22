@@ -1,6 +1,7 @@
 package com.backpackr.de;
 
 import com.backpackr.de.config.JobConfig;
+import com.backpackr.de.job.BuildWauJob;
 import com.backpackr.de.job.IngestionJob;
 import com.backpackr.de.job.WauJob;
 import com.backpackr.de.util.SparkSessionFactory;
@@ -25,6 +26,7 @@ public final class App {
                         LocalDate.parse(require(opts, "start-date")),
                         LocalDate.parse(require(opts, "end-date")));
                 case "wau" -> new WauJob(spark, config).run();
+                case "build-wau" -> new BuildWauJob(spark, config).run();
                 default -> throw new IllegalArgumentException("Unknown mode: " + mode);
             }
         } finally {

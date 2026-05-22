@@ -32,4 +32,11 @@ public final class MetastoreManager {
                 "database", config.database(),
                 "table", config.table())));
     }
+
+    public void createWauTable() {
+        spark.sql(SqlLoader.loadAndBind("08_create_wau_table.sql", Map.of(
+                "database", config.database(),
+                "wau_table", config.wauTable(),
+                "wau_output_path", config.wauOutputPath())));
+    }
 }

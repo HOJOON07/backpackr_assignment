@@ -85,6 +85,14 @@ public final class JobConfig {
         return database() + "." + table();
     }
 
+    public String wauTable() {
+        return optional("wau.table", "weekly_active_users");
+    }
+
+    public String wauOutputPath() {
+        return required("wau.output.path");
+    }
+
     public int sessionGapSeconds() {
         return Integer.parseInt(optional("session.gap.seconds", "300"));
     }
