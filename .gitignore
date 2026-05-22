@@ -5,6 +5,7 @@ target/
 
 # Spark / Hive local metastore
 metastore_db/
+metastore/
 derby.log
 spark-warehouse/
 

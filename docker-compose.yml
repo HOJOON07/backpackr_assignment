@@ -10,7 +10,7 @@ services:
     volumes:
       - ./data:/opt/app/data
       - ./conf:/opt/app/conf
-      - ./metastore_db:/opt/app/metastore_db
+      - ./metastore:/opt/app/metastore
       - ./spark-warehouse:/opt/app/spark-warehouse
     working_dir: /opt/app
     command:

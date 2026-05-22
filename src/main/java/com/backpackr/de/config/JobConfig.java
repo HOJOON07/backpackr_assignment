@@ -53,6 +53,10 @@ public final class JobConfig {
         return optional("hive.metastore.uris", "");
     }
 
+    public String metastoreDbPath() {
+        return optional("metastore.db.path", "/opt/app/metastore/metastore_db");
+    }
+
     public String warehousePath() {
         return required("warehouse.path");
     }

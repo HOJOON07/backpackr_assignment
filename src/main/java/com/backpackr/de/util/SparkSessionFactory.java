@@ -24,6 +24,9 @@ public final class SparkSessionFactory {
         if ("remote".equalsIgnoreCase(config.metastoreMode())
                 && !config.hiveMetastoreUris().isBlank()) {
             builder.config("hive.metastore.uris", config.hiveMetastoreUris());
+        } else {
+            builder.config("spark.hadoop.javax.jdo.option.ConnectionURL",
+                    "jdbc:derby:;databaseName=" + config.metastoreDbPath() + ";create=true");
         }
 
         return builder.enableHiveSupport().getOrCreate();
