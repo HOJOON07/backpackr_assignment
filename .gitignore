@@ -1,0 +1,31 @@
+# Maven
+target/
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# Spark / Hive local metastore
+metastore_db/
+derby.log
+spark-warehouse/
+
+# Data (large raw inputs and generated outputs are not committed; samples are)
+data/raw/*
+!data/raw/.gitkeep
+data/warehouse/*
+!data/warehouse/.gitkeep
+data/manifests/batch_runs/*
+!data/manifests/batch_runs/.gitkeep
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+
+# Logs
+*.log
