@@ -15,21 +15,13 @@
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Spark 4.x is built against Scala 2.13 only (2.12 support dropped). -->
         <spark.version>4.1.1</spark.version>
         <scala.binary.version>2.13</scala.binary.version>
-
         <junit.version>5.10.2</junit.version>
         <jackson.version>2.18.2</jackson.version>
     </properties>
 
     <dependencies>
-        <!--
-          Spark dependencies are 'provided': the Spark runtime supplies them at
-          spark-submit time, so they are on the compile/test classpath but are
-          excluded from the packaged jar to avoid version clashes on the cluster.
-        -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_${scala.binary.version}</artifactId>
@@ -43,7 +35,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Audit manifest serialization. -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -55,7 +46,6 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -78,7 +68,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <!-- Spark on JDK 17 needs these modules opened for reflective access. -->
                     <argLine>
                         --add-opens=java.base/java.lang=ALL-UNNAMED
                         --add-opens=java.base/java.nio=ALL-UNNAMED
@@ -88,7 +77,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Builds a shaded jar containing our code + non-provided deps (e.g. Jackson). -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

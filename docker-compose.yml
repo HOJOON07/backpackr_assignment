@@ -1,6 +1,3 @@
-# Single Spark job container. No cluster, no remote metastore: the task is about
-# batch processing and external-table design, not infrastructure. Spark uses its
-# built-in (Derby) local metastore, persisted via the metastore_db volume.
 services:
   spark-job:
     build:
@@ -11,16 +8,11 @@ services:
       DRIVER_MEMORY: ${DRIVER_MEMORY:-4g}
       SPARK_MASTER: local[*]
     volumes:
-      # Raw CSV input + Parquet output + audit manifests.
       - ./data:/opt/app/data
-      # Runtime config (paths, database/table, metastore mode).
       - ./conf:/opt/app/conf
-      # Persist Hive metastore (Derby) and warehouse across container restarts.
       - ./metastore_db:/opt/app/metastore_db
       - ./spark-warehouse:/opt/app/spark-warehouse
     working_dir: /opt/app
-    # Default run: full Oct+Nov ingestion. Override at the CLI for other modes:
-    #   docker compose run --rm spark-job --mode wau --config /opt/app/conf/local.properties
     command:
       - --mode
       - ingest

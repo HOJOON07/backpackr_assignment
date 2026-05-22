@@ -6,11 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
 
-/**
- * Runtime configuration loaded from a properties file. Everything that differs
- * between local and production (paths, catalog names, metastore mode) lives
- * here so the application code stays environment-agnostic.
- */
 public final class JobConfig {
 
     private final Properties props;

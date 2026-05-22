@@ -5,14 +5,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-/**
- * Loads SQL statements bundled on the classpath (src/main/resources/sql) and
- * binds {@code ${name}} placeholders. Keeping transformation logic in .sql files
- * lets the data logic be reviewed and tested independently of the Java glue.
- *
- * <p>Placeholder values come from trusted sources (config + validated CLI dates),
- * not arbitrary user input.
- */
 public final class SqlLoader {
 
     private static final String SQL_DIR = "sql/";
