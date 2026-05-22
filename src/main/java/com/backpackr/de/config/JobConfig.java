@@ -93,6 +93,18 @@ public final class JobConfig {
         return required("wau.output.path");
     }
 
+    public String bronzeTable() {
+        return optional("bronze.table", "activity_events_bronze");
+    }
+
+    public String bronzeOutputPath() {
+        return required("bronze.output.path");
+    }
+
+    public int sessionBufferDays() {
+        return Integer.parseInt(optional("session.buffer.days", "2"));
+    }
+
     public int sessionGapSeconds() {
         return Integer.parseInt(optional("session.gap.seconds", "300"));
     }

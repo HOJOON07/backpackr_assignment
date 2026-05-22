@@ -8,22 +8,23 @@ import org.apache.spark.sql.SaveMode;
 
 public final class PartitionedWriter {
 
-    public static final String PARTITION_COLUMN = "event_date_kst";
     private static final long MAX_RECORDS_PER_FILE = 1_000_000L;
 
     private final String outputPath;
+    private final String partitionColumn;
 
-    public PartitionedWriter(String outputPath) {
+    public PartitionedWriter(String outputPath, String partitionColumn) {
         this.outputPath = outputPath;
+        this.partitionColumn = partitionColumn;
     }
 
     public void write(Dataset<Row> events) {
-        events.repartition(col(PARTITION_COLUMN))
+        events.repartition(col(partitionColumn))
                 .write()
                 .mode(SaveMode.Overwrite)
                 .option("compression", "snappy")
                 .option("maxRecordsPerFile", MAX_RECORDS_PER_FILE)
-                .partitionBy(PARTITION_COLUMN)
+                .partitionBy(partitionColumn)
                 .parquet(outputPath);
     }
 }

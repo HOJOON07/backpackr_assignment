@@ -39,4 +39,15 @@ public final class MetastoreManager {
                 "wau_table", config.wauTable(),
                 "wau_output_path", config.wauOutputPath())));
     }
+
+    public void createBronzeTable() {
+        spark.sql(SqlLoader.loadAndBind("09_create_bronze_table.sql", Map.of(
+                "database", config.database(),
+                "bronze_table", config.bronzeTable(),
+                "bronze_output_path", config.bronzeOutputPath())));
+    }
+
+    public void repairBronzePartitions() {
+        spark.sql("MSCK REPAIR TABLE " + config.database() + "." + config.bronzeTable());
+    }
 }

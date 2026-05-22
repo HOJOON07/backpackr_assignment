@@ -44,7 +44,11 @@ public final class IngestionJob {
         manifestWriter.write(manifest);
 
         try {
-            new CsvReader(spark, config).readAndRegister();
+            LocalDate readStartUtc = startDate.minusDays(config.sessionBufferDays());
+            spark.table(config.database() + "." + config.bronzeTable())
+                    .filter(col("event_date_utc").geq(to_date(lit(readStartUtc.toString())))
+                            .and(col("event_date_utc").leq(to_date(lit(endDate.toString())))))
+                    .createOrReplaceTempView(CsvReader.RAW_VIEW);
 
             String sql = SqlLoader.loadAndBind("02_sessionize_events.sql",
                     Map.of("gap_seconds", String.valueOf(config.sessionGapSeconds())));
@@ -56,7 +60,7 @@ public final class IngestionJob {
                     .cache();
             long rowCount = target.count();
 
-            new PartitionedWriter(config.outputPath()).write(target);
+            new PartitionedWriter(config.outputPath(), "event_date_kst").write(target);
 
             MetastoreManager metastore = new MetastoreManager(spark, config);
             metastore.createDatabase();
